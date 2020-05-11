@@ -35,14 +35,13 @@ function findElement(arr, value) {
  *    2 => [ 1, 3 ]
  *    5 => [ 1, 3, 5, 7, 9 ]
  */
-function generateOdds(len) {
-  const arr = [1];
-  for (let i = 1; i < len; i += 1) {
-    arr.push(arr[i - 1] + 2);
-  }
-  return arr;
-}
 
+function generateOdds(len) {
+  return Array(len).fill(1).reduce((acc, currentEl, index) => {
+    if (index) acc.push(acc[index - 1] + 2);
+    return acc;
+  }, [1]);
+}
 
 /**
  * Returns the doubled array - elements of the specified array
@@ -529,8 +528,15 @@ function distinct(arr) {
  *    "Poland" => ["Lodz"]
  *   }
  */
-function group(/* array, keySelector, valueSelector */) {
-  throw new Error('Not implemented');
+function group(array, keySelector, valueSelector) {
+  return array.reduce((acc, current) => {
+    const key = keySelector(current);
+    const value = valueSelector(current);
+    if (!acc.has(key)) acc.set(key, []);
+    acc.get(key).push(value);
+
+    return acc;
+  }, new Map());
 }
 
 
@@ -547,8 +553,8 @@ function group(/* array, keySelector, valueSelector */) {
  *   [[1, 2], [3, 4], [5, 6]], (x) => x     =>   [ 1, 2, 3, 4, 5, 6 ]
  *   ['one','two','three'], x=>x.split('')  =>   ['o','n','e','t','w','o','t','h','r','e','e']
  */
-function selectMany(/* arr, childrenSelector */) {
-  throw new Error('Not implemented');
+function selectMany(arr, childrenSelector) {
+  return arr.map((el) => childrenSelector(el)).flat();
 }
 
 
@@ -620,8 +626,8 @@ module.exports = {
   getIdentityMatrix,
   getIntervalArray, //+
   distinct, //+
-  group,
-  selectMany,
+  group, //+
+  selectMany, //+
   getElementByIndexes,
   swapHeadAndTail,
 };

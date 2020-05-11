@@ -54,9 +54,10 @@ function parseDataFromIso8601(value) {
  *    Date(2012,1,1)    => true
  *    Date(2015,1,1)    => false
  */
-function isLeapYear(/* date */) {
-  // const data = new Date(date);
-  // return data.getFullYear() / 400 === 0
+
+function isLeapYear(date) {
+  const year = date.getFullYear();
+  return Boolean(year % 400 === 0 || (year % 4 === 0 && year % 100));
 }
 
 
@@ -105,7 +106,7 @@ function angleBetweenClockHands(/* date */) {
 module.exports = {
   parseDataFromRfc2822, //+
   parseDataFromIso8601, //+
-  isLeapYear,
+  isLeapYear, //+
   timeSpanToString,
   angleBetweenClockHands,
 };
