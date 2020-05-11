@@ -19,8 +19,8 @@
  *   5, 10 => 50
  *   5, 5  => 25
  */
-function getRectangleArea(/* width, height */) {
-  throw new Error('Not implemented');
+function getRectangleArea(width, height) {
+  return width * height;
 }
 
 
@@ -35,8 +35,8 @@ function getRectangleArea(/* width, height */) {
  *   3.14 => 19.729201864543903
  *   0    => 0
  */
-function getCicleCircumference(/* radius */) {
-  throw new Error('Not implemented');
+function getCicleCircumference(radius) {
+  return Math.PI * 2 * radius;
 }
 
 /**
@@ -52,7 +52,7 @@ function getCicleCircumference(/* radius */) {
  *  -3, 3  => 0
  */
 function getAverage(/* value1, value2 */) {
-  throw new Error('Not implemented');
+
 }
 
 /**
@@ -110,8 +110,14 @@ function getLinearEquationRoot(/* a, b */) {
  *   (0,1) (1,2)     => 0
  */
 function getAngleBetweenVectors(/* x1, y1, x2, y2 */) {
-  throw new Error('Not implemented');
+
+  //
+  // // angle in radians
+  //   return angleRadians = Math.atan2(y2 - y1, x2 - x1) ;
+
+
 }
+
 
 /**
  * Returns a last digit of a integer number.
@@ -125,10 +131,10 @@ function getAngleBetweenVectors(/* x1, y1, x2, y2 */) {
  *     5     => 5
  *     0     => 0
  */
-function getLastDigit(/* value */) {
-  throw new Error('Not implemented');
+function getLastDigit(value) {
+  const str = String(value);
+  return str.length > 1 ? +str.slice(-1) : value;
 }
-
 
 /**
  * Returns a number by given string representation.
@@ -141,8 +147,8 @@ function getLastDigit(/* value */) {
  *     '37'     => 37
  * '-525.5'     => -525.5
  */
-function parseNumberFromString(/* value */) {
-  throw new Error('Not implemented');
+function parseNumberFromString(value) {
+  return String(value);
 }
 
 /**
@@ -179,8 +185,9 @@ function getParallelipidedDiagonal(/* a, b, c */) {
  *   1678, 2  => 1700
  *   1678, 3  => 2000
  */
-function roundToPowerOfTen(/* num, pow */) {
-  throw new Error('Not implemented');
+function roundToPowerOfTen(num, pow) {
+  if (pow === 0) return num;
+  return Math.round(num / Math.pow(10, pow)) * Math.pow(10, pow);
 }
 
 /**
@@ -200,9 +207,34 @@ function roundToPowerOfTen(/* num, pow */) {
  *   16 => false
  *   17 => true
  */
-function isPrime(/* n */) {
-  throw new Error('Not implemented');
+
+function isPrime(n) {
+  if (Number.isNaN(n) || !Number.isFinite(n) || n % 1 || n < 2) return false;
+  if (n === leastFactor(n)) return true;
+  return false;
 }
+
+function leastFactor(n) {
+  if (Number.isNaN(n) || !Number.isFinite(n)) return NaN;
+  if (n === 0) return 0;
+  if (n % 1 || n * n < 2) return 1;
+  if (n % 2 === 0) return 2;
+  if (n % 3 === 0) return 3;
+  if (n % 5 === 0) return 5;
+  const m = Math.sqrt(n);
+  for (let i = 7; i <= m; i += 30) {
+    if (n % i === 0) return i;
+    if (n % (i + 4) === 0) return i + 4;
+    if (n % (i + 6) === 0) return i + 6;
+    if (n % (i + 10) === 0) return i + 10;
+    if (n % (i + 12) === 0) return i + 12;
+    if (n % (i + 16) === 0) return i + 16;
+    if (n % (i + 22) === 0) return i + 22;
+    if (n % (i + 24) === 0) return i + 24;
+  }
+  return n;
+}
+
 
 /**
  * Tries to convert value to number and returns it if conversion was successfull;
@@ -224,16 +256,16 @@ function toNumber(/* value, def */) {
 }
 
 module.exports = {
-  getRectangleArea,
-  getCicleCircumference,
+  getRectangleArea, //+
+  getCicleCircumference, //+
   getAverage,
   getDistanceBetweenPoints,
   getLinearEquationRoot,
   getAngleBetweenVectors,
-  getLastDigit,
-  parseNumberFromString,
+  getLastDigit, //+
+  parseNumberFromString, //+
   getParallelipidedDiagonal,
-  roundToPowerOfTen,
-  isPrime,
+  roundToPowerOfTen, //+
+  isPrime, //+
   toNumber,
 };

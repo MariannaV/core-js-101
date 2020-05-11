@@ -20,5 +20,7 @@ module.exports = {
     'no-use-before-define': 0,
     "linebreak-style": 0,
     'prefer-template': 1,
+    'no-restricted-properties': 1,
+    'no-param-reassign': 1
   },
 };

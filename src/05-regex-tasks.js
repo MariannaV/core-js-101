@@ -32,7 +32,7 @@
  * @return {RegExp}
  */
 function getRegexForGuid() {
-  throw new Error('Not implemented');
+  return new RegExp(/\{[ABCDEF0-9]{8}-[ABCDEF0-9]{4}-[ABCDEF0-9]{4}-[ABCDEF0-9]{4}-[ABCDEF0-9]{12}\}/i);
 }
 
 
@@ -84,7 +84,7 @@ function getPasswordValidator(/* minLength */) {
 
 
 module.exports = {
-  getRegexForGuid,
+  getRegexForGuid, //+
   getRegexForPitSpot,
   getPasswordValidator,
 };
