@@ -54,7 +54,7 @@ function getRegexForGuid() {
  *
  */
 function getRegexForPitSpot() {
-return /.*p.t.*/;
+  return /.*p.t.*/;
 }
 
 
@@ -78,8 +78,8 @@ return /.*p.t.*/;
  *   'PASSW0RD'.match(validator)  => false
  *   'Pa55'.match(validator) => false
  */
-function getPasswordValidator( minLength ) {
- return new  RegExp(`^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z])[a-zA-Z0-9]{${minLength},}$`)
+function getPasswordValidator(minLength) {
+  return new RegExp(`^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z])[a-zA-Z0-9]{${minLength},}$`);
 }
 
 
