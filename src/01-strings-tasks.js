@@ -205,7 +205,7 @@ function extractEmails(str) {
  *
  */
 function getRectangleString(width, height) {
-  let arr = [];
+  const arr = [];
   for (let j = 0; j < height; j++) {
     let str = '';
     for (let i = 0; i < width; i++) {
@@ -266,8 +266,8 @@ function encodeToRot13(str) {
   const startStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
   const ROT13str = 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm';
 
-  let translate = str.split('')
-    .map(el => translateStr(el))
+  const translate = str.split('')
+    .map((el) => translateStr(el))
     .join('');
 
   function translateStr(letter) {
@@ -276,7 +276,6 @@ function encodeToRot13(str) {
   }
 
   return translate;
-
 }
 
 /**
@@ -292,8 +291,8 @@ function encodeToRot13(str) {
  *   isString('test') => true
  *   isString(new String('test')) => true
  */
-function isString( value ) {
-  return Boolean(value) && typeof(value.valueOf()) === 'string'// ? true : else return false;
+function isString(value) {
+  return Boolean(value) && typeof (value.valueOf()) === 'string';// ? true : else return false;
 }
 
 
@@ -347,4 +346,3 @@ module.exports = {
   isString,
   getCardId,
 };
-
