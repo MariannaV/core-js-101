@@ -211,20 +211,16 @@ function getRectangleString(width, height) {
     for (let i = 0; i < width; i++) {
       if (j === 0) {
         if (i === 0) {
-          console.log('1');
           str += '┌';
         } else if (i === width - 1) {
-          console.log('2');
           str += '┐';
         } else {
           str += '─';
         }
       } else if (j === height - 1) {
         if (i === 0) {
-          console.log('1');
           str += '└';
         } else if (i === width - 1) {
-          console.log('2');
           str += '┘';
         } else {
           str += '─';
@@ -241,10 +237,7 @@ function getRectangleString(width, height) {
   }
 
   return arr.join('\n') + '\n';
-
-
 }
-
 
 /**
  * Encode specified string with ROT13 cipher
