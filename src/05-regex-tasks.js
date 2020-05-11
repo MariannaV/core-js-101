@@ -54,7 +54,7 @@ function getRegexForGuid() {
  *
  */
 function getRegexForPitSpot() {
-  throw new Error('Not implemented');
+return /.*p.t.*/;
 }
 
 
@@ -72,19 +72,19 @@ function getRegexForPitSpot() {
  *
  * @example
  *   let validator = getPasswordValidator(6);
- *   'password'.match(validator)  => false
+   *   'password'.match(validator)  => false
  *   'Pa55Word'.match(validator)  => true
  *   'PASSw0rd'.match(validator)  => true
  *   'PASSW0RD'.match(validator)  => false
  *   'Pa55'.match(validator) => false
  */
-function getPasswordValidator(/* minLength */) {
-  throw new Error('Not implemented');
+function getPasswordValidator( minLength ) {
+ return new  RegExp(`^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z])[a-zA-Z0-9]{${minLength},}$`)
 }
 
 
 module.exports = {
-  getRegexForGuid, //+
+  getRegexForGuid,
   getRegexForPitSpot,
   getPasswordValidator,
 };
