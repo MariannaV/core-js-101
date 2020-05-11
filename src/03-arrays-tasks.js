@@ -37,7 +37,7 @@ function findElement(arr, value) {
  */
 function generateOdds(len) {
   const arr = [1];
-  for (let i = 1; i < len; i++) {
+  for (let i = 1; i < len; i += 1) {
     arr.push(arr[i - 1] + 2);
   }
   return arr;
@@ -222,7 +222,7 @@ function toCsvText(/* arr */) {
  *   [ 10, 100, -1 ]      => [ 100, 10000, 1 ]
  */
 function toArrayOfSquares(arr) {
-  return arr.map((el) => Math.pow(el, 2));
+  return arr.map((el) => el ** 2);
 }
 
 
@@ -322,7 +322,7 @@ function get3TopItems(arr) {
 function getPositivesCount(arr) {
   return arr.reduce((acc, el) => {
     if (typeof el === 'number' && el > 0) {
-      acc++;
+      return acc + 1;
     }
     return acc;
   }, 0);
@@ -478,7 +478,7 @@ function getIdentityMatrix(/* n */) {
  */
 function getIntervalArray(start, end) {
   const arr = [];
-  for (let i = start; i < end + 1; i++) {
+  for (let i = start; i < end + 1; i += 1) {
     arr.push(i);
   }
   return arr;

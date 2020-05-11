@@ -187,7 +187,7 @@ function getParallelipidedDiagonal(/* a, b, c */) {
  */
 function roundToPowerOfTen(num, pow) {
   if (pow === 0) return num;
-  return Math.round(num / Math.pow(10, pow)) * Math.pow(10, pow);
+  return Math.round(num / 10 ** pow) * (10 ** pow);
 }
 
 /**
@@ -208,12 +208,6 @@ function roundToPowerOfTen(num, pow) {
  *   17 => true
  */
 
-function isPrime(n) {
-  if (Number.isNaN(n) || !Number.isFinite(n) || n % 1 || n < 2) return false;
-  if (n === leastFactor(n)) return true;
-  return false;
-}
-
 function leastFactor(n) {
   if (Number.isNaN(n) || !Number.isFinite(n)) return NaN;
   if (n === 0) return 0;
@@ -233,6 +227,11 @@ function leastFactor(n) {
     if (n % (i + 24) === 0) return i + 24;
   }
   return n;
+}
+
+function isPrime(n) {
+  if (Number.isNaN(n) || !Number.isFinite(n) || n % 1 || n < 2) return false;
+  return n === leastFactor(n);
 }
 
 

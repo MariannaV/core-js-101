@@ -16,11 +16,10 @@ module.exports = {
     ecmaVersion: 2018,
   },
   rules: {
-    'no-plusplus': 0,
-    'no-use-before-define': 0,
-    "linebreak-style": 0,
-    'prefer-template': 1,
-    'no-restricted-properties': 1,
-    'no-param-reassign': 1
+    // 'no-plusplus': 0,
+    // 'no-use-before-define': 0,
+    // 'prefer-template': 1,
+    // 'no-restricted-properties': 1,
+    // 'no-param-reassign': 1
   },
 };
