@@ -171,7 +171,7 @@ function partialUsingArguments(/* fn, ...args1 */) {
  */
 
 function getIdGeneratorFunction(startFrom = 0) {
-  const generator = (function* () {
+  const generator = (function* generator() {
     let index = startFrom;
     while (true) {
       yield index;
