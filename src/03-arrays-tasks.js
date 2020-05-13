@@ -37,10 +37,12 @@ function findElement(arr, value) {
  */
 
 function generateOdds(len) {
-  return Array(len).fill(1).reduce((acc, currentEl, index) => {
-    if (index) acc.push(acc[index - 1] + 2);
-    return acc;
-  }, [1]);
+  return Array(len)
+    .fill(1)
+    .reduce((acc, currentEl, index) => {
+      if (index) acc.push(acc[index - 1] + 2);
+      return acc;
+    }, [1]);
 }
 
 /**
@@ -205,8 +207,8 @@ function getTail(arr, n) {
  *    +'20,21,22,23,24\n'
  *    +'30,31,32,33,34'
  */
-function toCsvText(/* arr */) {
-  throw new Error('Not implemented');
+function toCsvText(arr) {
+  return arr.join('\n');
 }
 
 /**
@@ -239,8 +241,21 @@ function toArrayOfSquares(arr) {
  *   [ 0, 0, 0, 0, 0]         => [ 0, 0, 0, 0, 0]
  *   [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] => [ 1, 3, 6, 10, 15, 21, 28, 36, 45, 55 ]
  */
-function getMovingSum(/* arr */) {
-  throw new Error('Not implemented');
+function getMovingSum(arr) {
+  const res = [];
+
+  function g(number) {
+    let n = number;
+    if (n < arr.length) {
+      res.push(arr.slice(0, n + 1)
+        .reduce((acc, current) => acc + current, 0));
+      n += 1;
+      g(n);
+    }
+  }
+
+  g(0);
+  return res;
 }
 
 /**
@@ -340,8 +355,22 @@ function getPositivesCount(arr) {
  *   [ 'nine','eight','nine','eight'] => [ 'eight','eight','nine','nine']
  *   [ 'one','one','one','zero' ]     => [ 'zero','one','one','one' ]
  */
-function sortDigitNamesByNumericOrder(/* arr */) {
-  throw new Error('Not implemented');
+function sortDigitNamesByNumericOrder(arr) {
+  const digitNamesMap = {
+    zero: 0,
+    one: 1,
+    two: 2,
+    three: 3,
+    four: 4,
+    five: 5,
+    six: 6,
+    seven: 7,
+    eight: 8,
+    nine: 9,
+  };
+  const compareNumbers = (a, b) => digitNamesMap[a] - digitNamesMap[b];
+
+  return arr.sort(compareNumbers);
 }
 
 /**
@@ -436,8 +465,16 @@ function toStringList(arr) {
  *      { country: 'Russia',  city: 'Saint Petersburg' }
  *    ]
  */
-function sortCitiesArray(/* arr */) {
-  throw new Error('Not implemented');
+function sortCitiesArray(arr) {
+  return arr.sort((a, b) => {
+    if (a.country > b.country) {
+      return 1;
+    }
+    if (a.country < b.country) {
+      return -1;
+    }
+    return a.city > b.city ? 1 : -1;
+  });
 }
 
 /**
@@ -458,8 +495,13 @@ function sortCitiesArray(/* arr */) {
  *           [0,0,0,1,0],
  *           [0,0,0,0,1]]
  */
-function getIdentityMatrix(/* n */) {
-  throw new Error('Not implemented');
+function getIdentityMatrix(n) {
+  return Array(n)
+    .fill(0)
+    .map((elem, i) => Array(n)
+      .fill(0)
+      .map((elem2, j) => 1 - Math
+        .min(Math.abs(i - j), 1)));
 }
 
 /**
@@ -533,7 +575,8 @@ function group(array, keySelector, valueSelector) {
     const key = keySelector(current);
     const value = valueSelector(current);
     if (!acc.has(key)) acc.set(key, []);
-    acc.get(key).push(value);
+    acc.get(key)
+      .push(value);
 
     return acc;
   }, new Map());
@@ -554,7 +597,8 @@ function group(array, keySelector, valueSelector) {
  *   ['one','two','three'], x=>x.split('')  =>   ['o','n','e','t','w','o','t','h','r','e','e']
  */
 function selectMany(arr, childrenSelector) {
-  return arr.map((el) => childrenSelector(el)).flat();
+  return arr.map((el) => childrenSelector(el))
+    .flat();
 }
 
 
@@ -570,8 +614,8 @@ function selectMany(arr, childrenSelector) {
  *   ['one','two','three'], [2]       => 'three'  (arr[2])
  *   [[[ 1, 2, 3]]], [ 0, 0, 1 ]      => 2        (arr[0][0][1])
  */
-function getElementByIndexes(/* arr, indexes */) {
-  throw new Error('Not implemented');
+function getElementByIndexes(arr, indexes) {
+  return indexes.reduce((acc, currentIndex) => acc[currentIndex], arr);
 }
 
 
@@ -593,8 +637,14 @@ function getElementByIndexes(/* arr, indexes */) {
  *   [ 1, 2, 3, 4, 5, 6, 7, 8 ]   =>  [ 5, 6, 7, 8, 1, 2, 3, 4 ]
  *
  */
-function swapHeadAndTail(/* arr */) {
-  throw new Error('Not implemented');
+function swapHeadAndTail(arr) {
+  if (arr.length % 2) {
+    const middleIndex = (arr.length - 1) / 2;
+    return [...arr.slice(middleIndex + 1), arr[middleIndex], ...arr.slice(0, middleIndex)];
+  }
+
+  const middleIndex = arr.length / 2;
+  return [...arr.slice(middleIndex), ...arr.slice(0, middleIndex)];
 }
 
 

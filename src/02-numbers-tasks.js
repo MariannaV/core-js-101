@@ -51,9 +51,8 @@ function getCicleCircumference(radius) {
  *  10, 0  => 5
  *  -3, 3  => 0
  */
-function getAverage(/* value1, value2 */) {
-// return (value1) + (value2) / 2;
-  throw new Error('Not implemented');
+function getAverage(value1, value2) {
+  return value1 / 2 + value2 / 2;
 }
 
 /**
@@ -89,8 +88,8 @@ function getDistanceBetweenPoints(x1, y1, x2, y2) {
  *   x + 8 = 0       => -8
  *   5*x = 0         => 0
  */
-function getLinearEquationRoot(/* a, b */) {
-  throw new Error('Not implemented');
+function getLinearEquationRoot(a, b) {
+  return +(-b / a);
 }
 
 
@@ -112,13 +111,17 @@ function getLinearEquationRoot(/* a, b */) {
  *   (0,1) (0,1)     => 0
  *   (0,1) (1,2)     => 0
  */
-function getAngleBetweenVectors(/* x1, y1, x2, y2 */) {
-
-  //
-  // // angle in radians
-  //   return angleRadians = Math.atan2(y2 - y1, x2 - x1) ;
-
-
+function getAngleBetweenVectors(x1, y1, x2, y2) {
+  let angle = Math.atan2(y2, x2) - Math.atan2(y1, x1);
+  if (angle < 0) {
+    angle += 2 * Math.PI;
+  }
+  if (angle > Math.PI) {
+    angle -= 2 * Math.PI;
+  } else if (angle <= -Math.PI) {
+    angle += 2 * Math.PI;
+  }
+  return angle;
 }
 
 
@@ -167,8 +170,8 @@ function parseNumberFromString(value) {
  *   3,3,3   => 5.196152422706632
  *   1,2,3   => 3.741657386773941
  */
-function getParallelipidedDiagonal(/* a, b, c */) {
-  throw new Error('Not implemented');
+function getParallelipidedDiagonal(a, b, c) {
+  return Math.sqrt(a ** 2 + b ** 2 + c ** 2);
 }
 
 /**
@@ -253,8 +256,8 @@ function isPrime(n) {
  *   toNumber(42, 0) => 42
  *   toNumber(new Number(42), 0) => 42
  */
-function toNumber(/* value, def */) {
-  throw new Error('Not implemented');
+function toNumber(value, def) {
+  return Number.isNaN(Number(value)) ? def : Number(value);
 }
 
 module.exports = {

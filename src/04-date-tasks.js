@@ -98,15 +98,21 @@ function timeSpanToString(/* startDate, endDate */) {
  *    Date.UTC(2016,3,5,18, 0) => Math.PI
  *    Date.UTC(2016,3,5,21, 0) => Math.PI/2
  */
-function angleBetweenClockHands(/* date */) {
-  throw new Error('Not implemented');
+function angleBetweenClockHands(date) {
+  let clockHours = date.getUTCHours();
+  const minutes = date.getUTCMinutes();
+  if (clockHours >= 12) clockHours -= 12;
+  clockHours = clockHours * 30 + minutes / 2;
+  let degrees = Math.abs(clockHours - minutes * 6);
+  if (degrees > 180) degrees = 360 - degrees;
+  return Math.PI * (degrees / 180);
 }
 
 
 module.exports = {
-  parseDataFromRfc2822, //+
-  parseDataFromIso8601, //+
-  isLeapYear, //+
+  parseDataFromRfc2822,
+  parseDataFromIso8601,
+  isLeapYear,
   timeSpanToString,
   angleBetweenClockHands,
 };

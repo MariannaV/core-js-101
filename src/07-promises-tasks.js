@@ -8,7 +8,8 @@
 
 /**
  * Return Promise object that is resolved with string value === 'Hooray!!! She said "Yes"!',
- * if boolean value === true is passed, resolved with string value === 'Oh no, she said "No".',
+ * if boolean value === true is passed,
+ * resolved with string value === 'Oh no, she said "No".',
  * if boolean value === false is passed, and rejected
  * with error message === 'Wrong parameter is passed! Ask her again.',
  * if is not boolean value passed
@@ -28,8 +29,16 @@
  *      .catch((error) => console.log(error.message)) // 'Error: Wrong parameter is passed!
  *                                                    //  Ask her again.';
  */
-function willYouMarryMe(/* isPositiveAnswer */) {
-  throw new Error('Not implemented');
+function willYouMarryMe(isPositiveAnswer) {
+  const answers = {
+    isTrue: 'Hooray!!! She said "Yes"!',
+    isFalse: 'Oh no, she said "No".',
+    error: 'Wrong parameter is passed! Ask her again.',
+  };
+  return new Promise((resolve, reject) => {
+    if (typeof isPositiveAnswer !== 'boolean') reject(Error(answers.error));
+    resolve(isPositiveAnswer ? answers.isTrue : answers.isFalse);
+  });
 }
 
 
@@ -48,8 +57,8 @@ function willYouMarryMe(/* isPositiveAnswer */) {
  *    })
  *
  */
-function processAllPromises(/* array */) {
-  throw new Error('Not implemented');
+function processAllPromises(array) {
+  return Promise.all(array);
 }
 
 /**
@@ -71,8 +80,8 @@ function processAllPromises(/* array */) {
  *    })
  *
  */
-function getFastestPromise(/* array */) {
-  throw new Error('Not implemented');
+function getFastestPromise(array) {
+  return Promise.race(array);
 }
 
 /**
@@ -92,8 +101,21 @@ function getFastestPromise(/* array */) {
  *    });
  *
  */
-function chainPromises(/* array, action */) {
-  throw new Error('Not implemented');
+function chainPromises(promises, action) {
+  return new Promise((resolve) => {
+    const arr = [];
+    let promisesLength = promises.length;
+    promises.forEach((x) => {
+      x.then((y) => {
+        arr.push(y);
+        if (arr.length === promisesLength) resolve(arr.reduce(action));
+      })
+        .catch(() => {
+          promisesLength -= 1;
+          if (arr.length === promisesLength) resolve(arr.reduce(action));
+        });
+    });
+  });
 }
 
 module.exports = {
