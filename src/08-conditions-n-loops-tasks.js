@@ -142,8 +142,11 @@ function isTriangle(a, b, c) {
  *   { top:20, left:20, width: 20, height: 20 }    =>  false
  *
  */
-function doRectanglesOverlap(/* rect1, rect2 */) {
-  throw new Error('Not implemented');
+function doRectanglesOverlap(rect1, rect2) {
+  if (rect1.top + rect1.height >= rect2.top && rect1.left + rect1.width >= rect2.left) {
+    return true;
+  }
+  return false;
 }
 
 
@@ -173,9 +176,8 @@ function doRectanglesOverlap(/* rect1, rect2 */) {
  *   { center: { x:0, y:0 }, radius:10 },  { x:10, y:10 }   => false
  *
  */
-function isInsideCircle(/* circle, point */) {
-// return Math.sqrt((x1-x0)*(x1-x0) + (y1-y0)*(y1-y0)) < r
-  throw new Error('Not implemented');
+function isInsideCircle(circle, point) {
+  return (circle.center.x - point.x) ** 2 + (circle.center.y - point.y) ** 2 < circle.radius ** 2;
 }
 
 
@@ -190,8 +192,14 @@ function isInsideCircle(/* circle, point */) {
  *   'abracadabra'  => 'c'
  *   'entente' => null
  */
-function findFirstSingleChar(/* str */) {
-  throw new Error('Not implemented');
+function findFirstSingleChar(str) {
+  for (let i = 0; i < str.length; i += 1) {
+    const char = str.charAt(i);
+    if (str.indexOf(char) === str.lastIndexOf(char)) {
+      return char;
+    }
+  }
+  return null;
 }
 
 
@@ -218,17 +226,8 @@ function findFirstSingleChar(/* str */) {
  *
  */
 function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
-  const arr = [];
-  if (isStartIncluded) {
-    arr.push('[');
-  }
-  arr.push('(');
-  if (a < b) { arr.push(`${a}, ${b}`); }
-  arr.push(`${b}, ${a}`);
-  if (isEndIncluded) {
-    arr.push(']');
-  } arr.push(')');
-  return arr.join('');
+  const [x, y] = [a, b].sort((q, w) => q - w);
+  return `${isStartIncluded ? '[' : '('}${x}, ${y}${isEndIncluded ? ']' : ')'}`;
 }
 
 
@@ -291,8 +290,18 @@ function reverseInteger(num) {
  *   5436468789016589 => false
  *   4916123456789012 => false
  */
-function isCreditCardNumber(/* cnn */) {
-  throw new Error('Not implemented');
+function isCreditCardNumber(cnn) {
+  const cardNumber = cnn;
+  const arr = `${cardNumber}`.split('');
+  const lastNum = arr.pop();
+  const dblArr = arr.reverse().map((num, index) => {
+    if ((index + 1) % 2 !== 0) {
+      return ((num * 2) > 9 ? (num * 2) - 9 : num * 2);
+    }
+    return +num;
+  }).reverse();
+  dblArr.push(+lastNum);
+  return (dblArr.reduce((a, b) => a + b) % 10 === 0);
 }
 
 
