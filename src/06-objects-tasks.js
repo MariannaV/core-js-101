@@ -114,32 +114,77 @@ function fromJSON(proto, json) {
  */
 
 const cssSelectorBuilder = {
-  element(/* value */) {
-    throw new Error('Not implemented');
+  order: ['element', 'id', 'class', 'attribute', 'pseudo-class', 'pseudo-element', 'combine'],
+  cantDouble: ['element', 'id', 'pseudo-element'],
+  stack: [],
+  clearStack() {
+    return this.stack.splice(0, this.stack.length).map((item) => item.value).join('');
+  },
+  canDouble() {
+    return this.stack
+      .map((item) => item.type)
+      .filter((item, index, arr) => arr.indexOf(item) !== index)
+      .every((item) => this.cantDouble.indexOf(item) === -1);
+  },
+  isOrderValid() {
+    if (this.stack.length === 1) {
+      return true;
+    }
+    return this.stack
+      .map((item) => item.type)
+      .filter((item, index, arr) => arr.indexOf(item) === index)
+      .every((item, index, arr) => this.order.indexOf(item) > this.order.indexOf(arr[index - 1]));
   },
 
-  id(/* value */) {
-    throw new Error('Not implemented');
+  add(type, ...value) {
+    const newBuilder = { ...this };
+
+    newBuilder.stack = this.stack.concat({ type, value: value.join('') });
+
+    if (!newBuilder.canDouble()) newBuilder.DoubleError();
+    if (!newBuilder.isOrderValid()) newBuilder.OrderError();
+
+    return newBuilder;
   },
 
-  class(/* value */) {
-    throw new Error('Not implemented');
+  element(value) {
+    return this.add('element', value);
   },
 
-  attr(/* value */) {
-    throw new Error('Not implemented');
+  OrderError() {
+    throw new Error('Selector parts should be arranged in the following order: element, id, class, attribute, pseudo-class, pseudo-element');
   },
 
-  pseudoClass(/* value */) {
-    throw new Error('Not implemented');
+  DoubleError() {
+    throw new Error('Element, id and pseudo-element should not occur more then one time inside the selector');
   },
 
-  pseudoElement(/* value */) {
-    throw new Error('Not implemented');
+  id(value) {
+    return this.add('id', `#${value}`);
   },
 
-  combine(/* selector1, combinator, selector2 */) {
-    throw new Error('Not implemented');
+  class(value) {
+    return this.add('class', `.${value}`);
+  },
+
+  attr(value) {
+    return this.add('attribute', `[${value}]`);
+  },
+
+  pseudoClass(value) {
+    return this.add('pseudo-class', `:${value}`);
+  },
+
+  pseudoElement(value) {
+    return this.add('pseudo-element', `::${value}`);
+  },
+
+  combine(selector1, combinator, selector2) {
+    return this.add('combine', selector1.stringify(), ` ${combinator} `, selector2.stringify());
+  },
+
+  stringify() {
+    return this.clearStack();
   },
 };
 

@@ -294,12 +294,14 @@ function isCreditCardNumber(cnn) {
   const cardNumber = cnn;
   const arr = `${cardNumber}`.split('');
   const lastNum = arr.pop();
-  const dblArr = arr.reverse().map((num, index) => {
-    if ((index + 1) % 2 !== 0) {
-      return ((num * 2) > 9 ? (num * 2) - 9 : num * 2);
-    }
-    return +num;
-  }).reverse();
+  const dblArr = arr.reverse()
+    .map((num, index) => {
+      if ((index + 1) % 2 !== 0) {
+        return ((num * 2) > 9 ? (num * 2) - 9 : num * 2);
+      }
+      return +num;
+    })
+    .reverse();
   dblArr.push(+lastNum);
   return (dblArr.reduce((a, b) => a + b) % 10 === 0);
 }
@@ -329,6 +331,7 @@ function sum(num) {
   }
   return initSum;
 }
+
 function getDigitalRoot(num) {
   let number = sum(num);
   if (number > 9) {
@@ -423,8 +426,12 @@ function toNaryString(num, n) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/webalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  const path = pathes.map((item) => item.split('/'));
+  const rotate = path[0].map((e, item) => path.map((i) => i[item]));
+  const elements = rotate.filter((array) => array.every((e) => e === array[0]));
+  return [...elements, ['']].map((item) => item[0])
+    .join('/');
 }
 
 
@@ -449,7 +456,8 @@ function getCommonDirectoryPath(/* pathes */) {
 function getMatrixProduct(m1, m2) {
   const a = m1;
   const b = m2;
-  const aNumRows = a.length; const aNumCols = a[0].length;
+  const aNumRows = a.length;
+  const aNumCols = a[0].length;
   const bNumCols = b[0].length;
   const m = new Array(aNumRows);
   for (let r = 0; r < aNumRows; r += 1) {
@@ -495,8 +503,23 @@ function getMatrixProduct(m1, m2) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
+function evaluateTicTacToePosition(position) {
+  const a = undefined;
+  for (let i = 0; i < 3; i += 1) {
+    if (position[0][i] === position[1][i] && position[0][i] === position[2][i]) {
+      if (position[0][i] !== a) return position[0][i];
+    }
+    if (position[i][0] === position[i][1] && position[i][0] === position[i][2]) {
+      if (position[i][0] !== a) return position[i][0];
+    }
+  }
+  if (position[0][0] === position[1][1] && position[0][0] === position[2][2]) {
+    if (position[1][1] !== a) return position[1][1];
+  }
+  if (position[0][2] === position[1][1] && position[0][2] === position[2][0]) {
+    return position[1][1];
+  }
+  return a;
 }
 
 
